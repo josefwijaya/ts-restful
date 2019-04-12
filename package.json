@@ -1,0 +1,20 @@
+{
+  "name": "rest-api-proto",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "@types/express": "^4.16.1"
+  },
+  "devDependencies": {
+    "tslint": "^5.15.0",
+    "typescript": "3.4.3"
+  },
+  "scripts": {
+    "build": "rm -rf dist/ && tsc",
+    "tslint": "tslint -c ./tslint.json --project .",
+    "start": "node dist/index"
+  },
+  "author": "https://github.com/josefwijaya",
+  "license": "ISC",
+  "description": ""
+}
