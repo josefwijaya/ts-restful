@@ -1,5 +1,8 @@
 export const conn = {
   uri: <string>process.env.PSQL_DB_URI,
+  sync: {
+    // schema: 'public'
+  },
   logging: false
 };
 
