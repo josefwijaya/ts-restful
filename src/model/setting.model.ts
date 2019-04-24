@@ -1,15 +1,16 @@
-import { DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes, Model } from 'sequelize';
 
-class model extends Model {}
+export default class Setting extends Model {}
 
-const attr = {
+export const attr = {
   key: { type: DataTypes.STRING, allowNull: false },
   value: { type: DataTypes.JSON }
 };
 
-const opt = {
+export const opt = {
   modelName: 'Setting',
-  tableName: 'Settings'
+  tableName: 'Settings',
+  sequelize: ''
 };
 
-export default { model, attr, opt }
+// export default { model, attr, opt }

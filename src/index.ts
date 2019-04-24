@@ -1,9 +1,7 @@
-import { setTimeout } from 'timers';
 import { env } from './lib/env';
 import { asset, conn, server } from './config/index.conf';
 import { Connection, Db } from './database/conn.db';
 import { ExpressApp } from './www/rest';
-import User from './model/user.model';
 
 if (env.error) console.error('ENVIRONMENT VARIABLEs could not be loaded');
 
@@ -23,18 +21,13 @@ async function initApp () {
     port: server.port,
     publicAsset: asset.public
   });
+  app.mountRoute();
   await app.start();
 }
 
 (async () => {
   await initDb();
   await initApp();
-  console.log(User.model.toString())
-  // const created = await User.model.create({ firstName: 'jo' });
-  // console.log(created);
-
-  // const list = await User.model.findAll();
-  // console.log(list);
 })().catch(e => {
   console.error(e);
   process.exit(0);
