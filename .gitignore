@@ -1,3 +1,6 @@
+# vscode
+.vscode/
+
 lib-cov
 *.seed
 *.log
