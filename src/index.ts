@@ -11,7 +11,6 @@ async function initDb () {
   // it creates an instance of multiple classes
   const newCon = new Connection(conn.uri, conn.logging);
   await newCon.auth();
-  await newCon.load('./src/modules', 'model')
   return {};
 }
 
@@ -21,7 +20,7 @@ async function initApp () {
     port: server.port,
     publicAsset: asset.public
   });
-
+  app.mountRoute();
   await app.start();
 }
 

@@ -3,6 +3,8 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+import { default as user } from '../modules/user/user.route';
+
 class Express {
   private ASSET_AGE = 31557600000;
   private app:any;
@@ -39,6 +41,10 @@ class Express {
 
   stop ():void {
     this.app.close(); // stop listening, but still running
+  }
+
+  mountRoute ():void {
+    user(this.app);
   }
 }
 
