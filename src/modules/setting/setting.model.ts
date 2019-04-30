@@ -9,8 +9,7 @@ export const attr = {
 
 export const opt = {
   modelName: 'Setting',
-  tableName: 'Settings',
-  sequelize: ''
+  tableName: 'Settings'
 };
 
 // export default { model, attr, opt }

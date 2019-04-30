@@ -1,15 +1,15 @@
+import _ from 'lodash';
 import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import path from 'path';
-
-import { default as user } from '../modules/user/user.route';
+import * as route from './route';
 
 class Express {
   private ASSET_AGE = 31557600000;
   private app:any;
 
-  constructor(port:number, asset:string) {
+  constructor(port:number) {
     this.app = express();
     this.app.set('port', port);
     // this.app.set('views', path.join(__dirname, '../views'));
@@ -18,11 +18,6 @@ class Express {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     // this.app.use(passport.initialize());
-
-    if (asset) {
-      const assetPath = path.join(process.cwd(), asset);
-      this.app.use('/public', express.static(assetPath, { maxAge: this.ASSET_AGE }));
-    }
 
     this.app.get('/', function (req:any, res:any) { res.send('ok'); });
   }
@@ -43,8 +38,21 @@ class Express {
     this.app.close(); // stop listening, but still running
   }
 
+  setStaticRoute(route:string, dir:string, assetAge = this.ASSET_AGE) {
+    const assetPath = path.join(process.cwd(), dir);
+    this.app.use(route, express.static(assetPath, { maxAge: assetAge }));
+  }
+
   mountRoute ():void {
-    user(this.app);
+    _.forEach(route, e => {
+      e.default(this.app);
+    });
+  }
+
+  mountNotFoundRoute ():void {
+    this.app.use('*', (req:any, res:any) => {
+      res.send('Not found');
+    });
   }
 }
 
@@ -52,13 +60,7 @@ class Express {
 //   return new Express(config);
 // };
 
-interface IConfig {
-  port: number;
-  publicAsset: string;
-}
-
-export
-const ExpressApp = function ({ port, publicAsset }:IConfig) {
-  const app = new Express(port, publicAsset);
+export const ExpressApp = function (port:number) {
+  const app = new Express(port);
   return app;
-}
+};

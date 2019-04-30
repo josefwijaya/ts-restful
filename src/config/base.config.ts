@@ -1,3 +1,8 @@
 export const asset = {
-  public: './asset/public'
+  public: {
+    img: {
+      dir: './asset/public/image/',
+      route: '/public/img/'
+    }
+  }
 };

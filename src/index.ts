@@ -11,21 +11,21 @@ async function initDb () {
   // it creates an instance of multiple classes
   const newCon = new Connection(conn.uri, conn.logging);
   await newCon.auth();
+  await newCon.sync({});
   return {};
 }
 
 async function initApp () {
   // TODO add logger
-  const app = ExpressApp({
-    port: server.port,
-    publicAsset: asset.public
-  });
+  const app = ExpressApp(server.port);
+  app.setStaticRoute(asset.public.img.route, asset.public.img.dir);
   app.mountRoute();
+
   await app.start();
 }
 
 (async () => {
-  const db = await initDb();
+  await initDb();
   await initApp();
 })().catch(e => {
   throw e;

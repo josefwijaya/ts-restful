@@ -8,8 +8,12 @@ export default class CRUD {
     return this.model.create(data);
   }
 
-  get (query:object) {
-    return this.model.findAll(query);
+  get (query:object, opt:{ multi: boolean|undefined }) {
+    if (opt.multi) {
+      return this.model.findAll(query);
+    } else {
+      return this.model.findOne(query);
+    }
   }
 
 

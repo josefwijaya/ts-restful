@@ -9,6 +9,18 @@ export const create = async (req:Request, res:Response, next:NextFunction) => {
 };
 
 export const list = async (req:Request, res:Response, next:NextFunction) => {
-  const list = await UserS.get({ where: { } });
+  const list = await UserS.get({ where: { } }, { multi: true });
   return res.jsonp(list);
+}
+
+export const get = async (req:Request, res:Response, next:NextFunction) => {
+  const id = req.params.id;
+  let data, get;
+  try {
+    get = await UserS.get({ where: { id } }, { multi: undefined });
+    data = get;
+  } catch (e) {
+    data = e;
+  }
+  return res.jsonp(get);
 }
