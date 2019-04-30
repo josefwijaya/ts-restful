@@ -1,0 +1,5 @@
+Further Improvement/Enhancement/Feature:
+- Firming up Sequelize and how model should be imported
+- setup automation testing
+- setup dockerfile
+- setup travis
