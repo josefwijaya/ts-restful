@@ -1,4 +1,4 @@
-import { Application } from 'express'
+import { Application } from 'express';
 import { create, list, get } from './user.controller';
 
 export default function (app:Application) {

@@ -50,7 +50,7 @@ class Express {
   }
 
   mountNotFoundRoute ():void {
-    this.app.use('*', (req:any, res:any) => {
+    this.app.use('*', (_:any, res:any) => {
       res.send('Not found');
     });
   }

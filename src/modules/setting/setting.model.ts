@@ -1,15 +1,20 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 
-export default class Setting extends Model {}
+export default class Setting extends Model {
+  static initialize (sequelize:Sequelize) {
+    const attr = {
+      key: { type: DataTypes.STRING, allowNull: false },
+      value: { type: DataTypes.JSON, allowNull: false }
+    };
+    const opt = {
+      sequelize,
+      modelName: 'Setting',
+      tableName: 'Settings'
+    };
+    return { attr, opt };
+  }
 
-export const attr = {
-  key: { type: DataTypes.STRING, allowNull: false },
-  value: { type: DataTypes.JSON }
-};
+  static association (model:object) {
 
-export const opt = {
-  modelName: 'Setting',
-  tableName: 'Settings'
-};
-
-// export default { model, attr, opt }
+  }
+}

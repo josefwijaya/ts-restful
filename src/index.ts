@@ -1,7 +1,7 @@
 import { env } from './lib/env';
 import { asset, conn, server } from './config/index.conf';
 import { Connection, Db } from './database/conn.db';
-import { ExpressApp } from './www/rest';
+import { ExpressApp } from './www/express';
 
 if (env.error) console.error('ENVIRONMENT VARIABLEs could not be loaded');
 
@@ -20,6 +20,7 @@ async function initApp () {
   const app = ExpressApp(server.port);
   app.setStaticRoute(asset.public.img.route, asset.public.img.dir);
   app.mountRoute();
+  app.mountNotFoundRoute();
 
   await app.start();
 }

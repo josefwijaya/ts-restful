@@ -1,42 +1,41 @@
-import { DataTypes, Model } from 'sequelize';
-import { HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, Association, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin } from 'sequelize';
+// import { M } from '../../database/model.factory';
+import BaseModel from '../../database/base.model';
+import { Sequelize, DataTypes, Model } from 'sequelize';
 
-export const attr = {
-  firstName: { type: DataTypes.STRING, allowNull: false },
-  lastName: { type: DataTypes.STRING },
-  password: { type: DataTypes.STRING, allowNull: false },
-  username: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false },
+export const init = function (sequelize:Sequelize) {
+  const attr = {
+    firstName: { type: DataTypes.STRING, allowNull: false },
+    lastName: { type: DataTypes.STRING },
+    password: { type: DataTypes.STRING, allowNull: false },
+    username: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false }
+  };
 
-  // fullName: { type: DataTypes.VIRTUAL }
+  const opt = {
+    sequelize, modelName: 'User', tableName: 'Users'
+  };
+
+  return { attr, opt };
 };
 
-export const opt = {
-  // indexes: [], // e.g. [ { unique: true, fields: ['email', 'firstName'] } ]
-  // getterMethods: {
-  //   fullName: function () {
-  //     return this.firstName + ' ' + this.lastName
-  //   }
-  // },
-  modelName: 'User',
-  tableName: 'Users'
-};
-
-export default class User extends Model {
-  // public id!:number;
-  public firstName!:string;
-  public lastName!:string|null;
-  // public password!:string;
+export default class User extends BaseModel {
+  id?:number;
+  firstName!:string;
+  lastName!:string;
+  password!:string;
+  username!:string;
+  email!:string;
+  createdAt?:Date;
+  updatedAt?:Date;
 
   get fullName () {
     return this.firstName + ' ' + this.lastName;
   }
 
   toJSON () {
-    // const fN = this.get('fullName');
-    // console.log(fN);
-    const values = this.get();
-    console.log(this.fullName);
-    return values;
+    const data = Object.assign(this.get(), { fullName: this.fullName });
+    return data;
   }
 }
+// export default class User extends M {}
+// export default class User extends Model {}
